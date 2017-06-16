@@ -96,30 +96,45 @@ def main():
 	t2 = input("Enter 2nd query:")
 	# calling function to get tweets
 	tweets1 = api.get_tweets(query = t1,count = 2**1000)
-	# tweets2 = api.get_tweets(query = t2,count = 2**1000)
-	print(tweets1[:10])
+	tweets2 = api.get_tweets(query = t2,count = 2**1000)
+	# print(tweets1[:10])
 	# picking positive tweets from tweets
-	ptweets1 = [tweet for tweet in tweets1 if tweet['sentiment'] == 'positive']
-	# percentage of positive tweets
-	print("Positive tweets percentage: {} %".format(100*len(ptweets1)/len(tweets1)))
-	# picking negative tweets from tweets
-	ntweets1 = [tweet for tweet in tweets1 if tweet['sentiment'] == 'negative']
-	# percentage of negative tweets
-	print("Negative tweets percentage: {} %".format(100*len(ntweets1)/len(tweets1)))
-	# percentage of neutral tweets
-	print("Neutral tweets percentage: {} % ".format(100*(len(tweets1) - len(ntweets1) - len(ptweets1))/len(tweets1)))
-	
-	# ptweets2 = [tweet for tweet in tweets2 if tweet['sentiment'] == 'positive']
-	# # percentage of positive tweets
-	# print("Positive tweets percentage: {} %".format(100*len(ptweets2)/len(tweets2)))
-	# # picking negative tweets from tweets
-	# ntweets2 = [tweet for tweet in tweets2 if tweet['sentiment'] == 'negative']
-	# # percentage of negative tweets
-	# print("Negative tweets percentage: {} %".format(100*len(ntweets2)/len(tweets2)))
-	# # percentage of neutral tweets
-	# print("Neutral tweets percentage: {} % ".format(100*(len(tweets2) - len(ntweets2) - len(ptweets2))/len(tweets2)))
-	
+	try:
+		ptweets1 = [tweet for tweet in tweets1 if tweet['sentiment'] == 'positive']
+		# percentage of positive tweets
+		print("Positive tweets percentage: {} %".format(100*len(ptweets1)/len(tweets1)))
+		# picking negative tweets from tweets
+		ntweets1 = [tweet for tweet in tweets1 if tweet['sentiment'] == 'negative']
+		# percentage of negative tweets
+		print("Negative tweets percentage: {} %".format(100*len(ntweets1)/len(tweets1)))
+		# percentage of neutral tweets
+		print("Neutral tweets percentage: {} % ".format(100*(len(tweets1) - len(ntweets1) - len(ptweets1))/len(tweets1)))
+	except ZeroDivisionError:
+		print("Poor Twitter Performance, "+t1)
 
+	try:
+		ptweets2 = [tweet for tweet in tweets2 if tweet['sentiment'] == 'positive']
+		# percentage of positive tweets
+		print("Positive tweets percentage: {} %".format(100*len(ptweets2)/len(tweets2)))
+		# picking negative tweets from tweets
+		ntweets2 = [tweet for tweet in tweets2 if tweet['sentiment'] == 'negative']
+		# percentage of negative tweets
+		print("Negative tweets percentage: {} %".format(100*len(ntweets2)/len(tweets2)))
+		# percentage of neutral tweets
+		print("Neutral tweets percentage: {} % ".format(100*(len(tweets2) - len(ntweets2) - len(ptweets2))/len(tweets2)))
+	except ZeroDivisionError:
+		print("Poor Twitter Performance, "+t2)
+
+	try:
+		if (100*len(ptweets1)/len(tweets1)) > (100*len(ptweets2)/len(tweets2)):
+			print(t1+' Wins')
+		elif (100*len(ptweets1)/len(tweets1)) < (100*len(ptweets2)/len(tweets2)):
+			print(t2+' Wins')
+		else:
+			print("Both are Equal")
+	except ZeroDivisionError:
+		pass
+		
 	print("Time : {} seconds".format(time.time()-t))
 	# printing first 5 positive tweets
 	# print("\n\nPositive tweets:")
